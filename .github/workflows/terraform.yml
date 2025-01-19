@@ -6,7 +6,7 @@ on:
       - feature
 
 jobs:
-  terraform:
+  aws-cli:
     runs-on: ubuntu-latest
     environment: aws
     
