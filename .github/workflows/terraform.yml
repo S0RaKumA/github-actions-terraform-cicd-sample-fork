@@ -1,9 +1,9 @@
-name: Terraform Deploy
+name: Terraform Deploy - feature branch
 
 on:
   push:
     branches:
-      - main
+      - feature
 
 jobs:
   terraform:
@@ -46,11 +46,11 @@ jobs:
       run: terraform plan -out=tfplan
 
     # Add a prompt to ask the user whether to apply or destroy changes
-    - name: Apply Terraform changes
-      run: terraform apply --auto-approve
+    #- name: Apply Terraform changes
+    #  run: terraform apply --auto-approve
 
-    - name: Clean up Cloud resources
-      run: terraform destroy --auto-approve
+    #- name: Clean up Cloud resources
+    #  run: terraform destroy --auto-approve
 
     - name: Clean up
       run: rm tfplan
