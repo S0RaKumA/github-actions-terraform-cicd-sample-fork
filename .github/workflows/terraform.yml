@@ -14,36 +14,63 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set AWS credentials
+    #Set AWS credentials for terraform usagee
+    #- name: Set AWS credentials
+      #run: |
+        #echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        #echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+        #echo "AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
+        #export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+        #export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
+
+    - name: Set up AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    
+    # Install AWS CLI
+    - name: Install AWS CLI
       run: |
-        echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-        echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-        echo "AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
-        export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-        export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
-        
-    # - name: Install AWS CLI
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y awscli
+        sudo apt-get update
+        sudo apt-get install -y awscli
+
+    - name: Create EC2 instance
+      run: |
+        #Variables for EC2 instance
+        INSTANCE_TYPE="t2.micro"  # Adjust as necessary
+        AMI_ID="ami-0df8c184d5f6ae949"     # Replace with your preferred AMI ID
+        KEY_NAME="testkey"    # Replace with your key pair name
+ 
+        # Launch the EC2 instance
+        INSTANCE_ID=$(aws ec2 run-instances \
+          --image-id $AMI_ID \
+          --instance-type $INSTANCE_TYPE \
+          --key-name $KEY_NAME \
+          --query 'Instances[0].InstanceId' \
+          --output text)
+ 
+        echo "Launched EC2 instance with ID: $INSTANCE_ID"
 
     # - name: Configure AWS CLI
     #   run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set default.region $AWS_REGION
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.0.0
+    #Below is the code for terraform setup, plan and apply
+    #- name: Set up Terraform
+      #uses: hashicorp/setup-terraform@v1
+      #with:
+        #terraform_version: 1.0.0
 
-    - name: Initialize Terraform
-      run: terraform init
+    #- name: Initialize Terraform
+      #run: terraform init
       # env:
       #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Plan Terraform changes
-      run: terraform plan -out=tfplan
+    #- name: Plan Terraform changes
+      #run: terraform plan -out=tfplan
 
     # Add a prompt to ask the user whether to apply or destroy changes
     #- name: Apply Terraform changes
@@ -52,5 +79,5 @@ jobs:
     #- name: Clean up Cloud resources
     #  run: terraform destroy --auto-approve
 
-    - name: Clean up
-      run: rm tfplan
+    #- name: Clean up
+      #run: rm tfplan
