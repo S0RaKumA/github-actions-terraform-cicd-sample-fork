@@ -23,7 +23,7 @@ data "aws_ami" "amazon_linux" {
 resource "aws_security_group" "ssh_tf" {
   name        = "ssh-security-group"
   description = "Allow SSH access"
-  vpc_id      = "vpc-xxxxxxxx" # Replace with your VPC ID (if using an existing VPC)
+  vpc_id      = "vpc-0291c4781205d3f49" # Replace with your VPC ID (if using an existing VPC)
 
   ingress {
     from_port   = 22
