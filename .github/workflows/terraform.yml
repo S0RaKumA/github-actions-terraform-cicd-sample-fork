@@ -66,6 +66,8 @@ jobs:
           #--key-name $KEY_NAME \
           #--query 'Instances[0].InstanceId' \
           #--output text)
+          #--tag-specifications \
+          #'ResourceType=instance,Tags=[{Key=Name,Value=test01}]'
         #echo "Launched EC2 instance with ID: $INSTANCE_ID"
 
     # - name: Configure AWS CLI
