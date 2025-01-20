@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feature
+    paths:
+      - 'main.tf' # Path to the Terraform configuration file
   workflow_dispatch:
 
 jobs:
@@ -34,6 +36,11 @@ jobs:
 
     - name: echo AWS CLI Version
       run: aws --version
+    
+    #- name: Setup Infracost
+      #uses: infracost/actions/setup@v2
+      #with:
+        #api-key: ${{ secrets.INFRACOST_API_KEY }}
     
     # Install AWS CLI, not necessary since its already pre-installed
     #- name: Install AWS CLI
