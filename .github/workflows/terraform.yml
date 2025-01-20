@@ -51,24 +51,24 @@ jobs:
         #sudo apt-get update
         #sudo apt-get install -y awscli
 
-    - name: Create EC2 instance
-      run: |
+    #- name: Create EC2 instance
+      #run: |
         # Variables for EC2 instance
-        INSTANCE_TYPE="t2.micro"  # Adjust as necessary
-        AMI_ID="ami-0df8c184d5f6ae949"     # Replace with your preferred AMI ID
-        KEY_NAME="testkey"    # Replace with your key pair name
+        #INSTANCE_TYPE="t2.micro"  # Adjust as necessary
+        #AMI_ID="ami-0df8c184d5f6ae949"     # Replace with your preferred AMI ID
+        #KEY_NAME="testkey"    # Replace with your key pair name
         #Try insert instance name here
  
         # Launch the EC2 instance
-        INSTANCE_ID=$(aws ec2 run-instances \
-          --image-id $AMI_ID \
-          --instance-type $INSTANCE_TYPE \
-          --key-name $KEY_NAME \
-          --query 'Instances[0].InstanceId' \
-          --output text)
+        #INSTANCE_ID=$(aws ec2 run-instances \
+          #--image-id $AMI_ID \
+          #--instance-type $INSTANCE_TYPE \
+          #--key-name $KEY_NAME \
+          #--query 'Instances[0].InstanceId' \
+          #--output text)
           #--tag-specifications \
           #'ResourceType=instance,Tags=[{Key=Name,Value=test01}]'
-        echo "Launched EC2 instance with ID: $INSTANCE_ID"
+        #echo "Launched EC2 instance with ID: $INSTANCE_ID"
 
     # - name: Configure AWS CLI
     #   run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set default.region $AWS_REGION
