@@ -53,7 +53,7 @@ jobs:
 
     - name: Create EC2 instance
       run: |
-        #Variables for EC2 instance
+        # Variables for EC2 instance
         INSTANCE_TYPE="t2.micro"  # Adjust as necessary
         AMI_ID="ami-0df8c184d5f6ae949"     # Replace with your preferred AMI ID
         KEY_NAME="testkey"    # Replace with your key pair name
@@ -66,8 +66,8 @@ jobs:
           --key-name $KEY_NAME \
           --query 'Instances[0].InstanceId' \
           --output text)
-          --tag-specifications \
-          'ResourceType=instance,Tags=[{Key=Name,Value=test01}]'
+          #--tag-specifications \
+          #'ResourceType=instance,Tags=[{Key=Name,Value=test01}]'
         echo "Launched EC2 instance with ID: $INSTANCE_ID"
 
     # - name: Configure AWS CLI
