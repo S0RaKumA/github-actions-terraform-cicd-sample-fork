@@ -1,8 +1,8 @@
 terraform {
   #backend "s3" {
-  #  bucket         = "s306022024"
-  #  key            = "terraform.tfstate"
-  #  region         = "us-east-1"
+  #  bucket         = "james329-test"
+  #  key            = "/main-branch/terraform.tfstate"
+  #  region         = "ap-southeast-5"
   #}
 }
 
